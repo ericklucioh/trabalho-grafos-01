@@ -18,7 +18,7 @@ movies = [(movie.get("title")) for movie in data]
 
 # Cria a janela principal
 root = tk.Tk()
-root.title("Trabalho Grafos - 01")
+root.title("Trabalho Grafo - 01")
 
 # Define o tamanho da janela
 root.geometry("400x400")
@@ -85,7 +85,7 @@ movie_entry2.bind("<<ComboboxSelected>>", on_movie2_select)
 def expand_frame(*_):
     if actor_origin.get() and actor_destiny.get():
         root = tk.Tk()
-        root.title("Trabalho Grafos - 01")
+        root.title("Trabalho Grafo - 01")
 
         root.geometry("400x200")
 
@@ -94,7 +94,7 @@ def expand_frame(*_):
     else:
         # Mostra uma mensagem de erro se o filme não for encontrado
         root = tk.Tk()
-        root.title("Trabalho Grafos - 01")
+        root.title("Trabalho Grafo - 01")
 
         root.geometry("350x100")
 
