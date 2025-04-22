@@ -1,2 +1,1 @@
-class MovieModel :
-    
+class MovieModel:
