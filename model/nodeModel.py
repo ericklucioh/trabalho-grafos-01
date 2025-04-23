@@ -15,7 +15,7 @@ class NodeModel :
         return f"Node(node_id={self.node_id}, node_type={self.node_type}, name={self.name})"
 
     def __eq__(self, other):
-        if not isinstance(other, Node):
+        if not isinstance(other, NodeType):
             return False
         return (self.node_id == other.node_id and
                 self.node_type == other.node_type and
