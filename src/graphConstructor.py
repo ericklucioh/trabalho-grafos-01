@@ -1,7 +1,6 @@
 import json
 import os
 from model.movieModel import MovieModel
-from src.main import main
 
 
 def GraphConstructor():
@@ -18,7 +17,3 @@ def GraphConstructor():
     # Exemplo: printar os títulos
     for movie in movies:
         print(movie.title)
-
-
-if __name__ == "__main__":
-    main()
