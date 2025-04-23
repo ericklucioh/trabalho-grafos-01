@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import json
 import os
 from model.movieModel import MovieModel
@@ -22,3 +23,6 @@ def GraphConstructor():
 
 if __name__ == "__main__":
     main()
+=======
+class MovieModel:
+>>>>>>> 89c3c47994aab93d3644e6953f935942be77924a
