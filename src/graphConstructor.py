@@ -1,8 +1,9 @@
 import json
 import os
 import sys
+from data.latest_movies import latest_movies
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from model.movieModel import MovieModel
+from models.movieModel import MovieModel
 
 
 def GraphConstructor():
