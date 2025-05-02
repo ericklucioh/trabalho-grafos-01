@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from model.nodeModel import NodeModel
+from .nodeModel import NodeModel
 
 
 class Graph:
