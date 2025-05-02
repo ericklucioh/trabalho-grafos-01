@@ -1,16 +1,14 @@
 import json
 import os
-import sys
-from data.latest_movies import latest_movies
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from utils.paths import getLastestMovies
 from models.movieModel import MovieModel
 
 
 def GraphConstructor():
     # Caminho correto para o arquivo JSON
-    file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "data", "latest_movies.json")
-    file_path = os.path.normpath(file_path)
+    file_path = getLastestMovies()
 
+    print("test", file_path)
     
     # Abrindo o arquivo JSON
     if not os.path.exists(file_path):
@@ -26,6 +24,3 @@ def GraphConstructor():
     for movie in movies:
         print(movie.title)
 
-
-if __name__ == "__main__":
-    GraphConstructor()
