@@ -5,9 +5,12 @@ from tkinter import ttk
 import json
 import os
 
+from utils.paths import getLastestMovies
+
+
 # Carrega os dados do arquivo JSON
-file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..", "data", "latest_movies.json")
-file_path = os.path.normpath(file_path)
+file_path = getLastestMovies()
+
 
 if not os.path.exists(file_path):
     raise FileNotFoundError(f"Arquivo não encontrado: {file_path}")
