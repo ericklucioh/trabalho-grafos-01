@@ -1,7 +1,6 @@
-from dataclasses import dataclass
+from typing import TypedDict
 
-@dataclass
-class MovieModel:
+class MovieModel(TypedDict):
     id: int
     title: str
     cast: list[str]
