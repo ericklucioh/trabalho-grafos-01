@@ -48,7 +48,12 @@ def main():
     # Define o tipo de busca com base na interface gráfica
     resultado = iniciar_interface()
     if len(resultado) == 4:
-        tipo_busca, caminho_texto, origem, destino = resultado
+        tipo_busca, caminho_texto_widget, origem, destino = resultado
+        if hasattr(caminho_texto_widget, "delete"):
+            caminho_texto = caminho_texto_widget
+        else:
+            print("Erro: caminho_texto não é um widget de texto válido.")
+            return
     else:
         print("Erro: iniciar_interface() não retornou exatamente 4 valores.")
         return
