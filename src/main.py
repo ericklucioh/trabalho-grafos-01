@@ -1,6 +1,6 @@
 
 from graphConstructor import GraphConstructor
-from src.layout import iniciar_interface
+from layout import iniciar_interface
 from models.graphModel import Graph
 
 
