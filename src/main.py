@@ -46,7 +46,12 @@ def main():
     graph = Graph()
 
     # Define o tipo de busca com base na interface gráfica
-    tipo_busca, caminho_texto, origem, destino = iniciar_interface()
+    resultado = iniciar_interface()
+    if len(resultado) == 4:
+        tipo_busca, caminho_texto, origem, destino = resultado
+    else:
+        print("Erro: iniciar_interface() não retornou exatamente 4 valores.")
+        return
 
     # Executa a busca com base no tipo selecionado
     executar_busca(graph, caminho_texto, origem, destino)
