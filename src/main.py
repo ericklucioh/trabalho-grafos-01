@@ -1,4 +1,3 @@
-
 from graphConstructor import GraphConstructor
 from meu_layout import iniciar_interface
 from models.graphModel import Graph
@@ -15,8 +14,6 @@ def main():
         for node, neighbors in graph.adjacency_list.items():
             f.write(f"{node.name} ({node.node_type.value}) -> ")
             f.write(", ".join(n.name for n in neighbors) + "\n")
-
-    iniciar_interface()
 
 if __name__ == "__main__":
     main()

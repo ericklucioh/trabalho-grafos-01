@@ -7,22 +7,6 @@ def iniciar_interface():
     grafo = Graph()
     atores = grafo.get_actors()
 
-    def executar_bfs():
-        caminho_texto.delete("1.0", tk.END)
-
-        origem = select_origem.get()
-        destino = select_destino.get()
-
-        caminho = grafo.find_shortest_path(origem, destino)
-
-        if caminho:
-            texto = "Caminho mínimo entre: \n {} e {}:\n{}".format(origem, destino, " \n-> ".join(caminho))
-        else:
-            texto = "Nenhum caminho encontrado entre {} e {}".format(origem, destino)
-
-        caminho_texto.insert(tk.END, texto)
-
-
     janela = tk.Tk()
     janela.title("TD 01")
     janela.geometry("400x400")
