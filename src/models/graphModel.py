@@ -91,3 +91,49 @@ class Graph:
     def __repr__(self):
         return "\n".join(f"{node.name} ({node.node_type.value}): {[n.name for n in neighbors]}"
                          for node, neighbors in self.adjacency_list.items())
+    
+    def get_node_by_name(self, name: str):
+        """
+        Retorna um nó pelo nome.
+        """
+        return next((node for node in self.adjacency_list if node.name == name), None)
+
+    def find_max_path_within_6_edges(self, origem, destino):
+        """
+        Encontra o caminho máximo entre dois nós com no máximo 6 arestas.
+        Retorna o caminho máximo e o número total de caminhos percorridos.
+        """
+        def dfs(node, target, path, visited, depth):
+            nonlocal total_caminhos
+            if depth > 6:  # Limite de 6 arestas
+                return None
+            if node == target:
+                total_caminhos += 1
+                return path
+
+            visited.add(node)
+            max_path = None
+
+            for neighbor in self.adjacency_list.get(node, []):
+                if neighbor not in visited:
+                    new_path = dfs(neighbor, target, path + [neighbor], visited, depth + 1)
+                    if new_path and (not max_path or len(new_path) > len(max_path)):
+                        max_path = new_path
+
+            visited.remove(node)
+            return max_path
+
+        origem_node = self.get_node_by_name(origem)
+        destino_node = self.get_node_by_name(destino)
+
+        if not origem_node or not destino_node:
+            return None, 0
+
+        total_caminhos = 0
+        max_path = dfs(origem_node, destino_node, [origem_node], set(), 0)
+
+        # Verifica se o caminho excede 6 arestas
+        if max_path and len(max_path) - 1 > 6:
+            return None, total_caminhos
+
+        return max_path, total_caminhos
