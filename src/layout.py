@@ -1,112 +1,65 @@
 import tkinter as tk
-
-import tkinter as tk
 from tkinter import ttk
-import json
-import os
 
-from utils.paths import getLastestMovies
+from models.graphModel import Graph
+
+def iniciar_interface():
+    grafo = Graph()
+    atores = grafo.get_actors()
+
+    def executar_bfs():
+        caminho_texto.delete("1.0", tk.END)
+
+        origem = select_origem.get()
+        destino = select_destino.get()
+
+        caminho = grafo.find_shortest_path(origem, destino)
+
+        if caminho:
+            texto = "Caminho mínimo entre:\n{} e {}:\n{}".format(
+                origem, destino, formatar_caminho(caminho)
+            )
+        else:
+            texto = "Nenhum caminho encontrado entre {} e {}".format(origem, destino)
 
 
-# Carrega os dados do arquivo JSON
-file_path = getLastestMovies()
+        caminho_texto.insert(tk.END, texto)
 
 
-if not os.path.exists(file_path):
-    raise FileNotFoundError(f"Arquivo não encontrado: {file_path}")
-with open(file_path, "r", encoding="utf-8") as file:
-    data = json.load(file)
+    janela = tk.Tk()
+    janela.title("TD 01")
+    janela.geometry("400x400")
+    janela.configure(bg="white")
 
-movies = [(movie.get("title")) for movie in data]
+    titulo = tk.Label(janela, text="6 GRAUS DE NETWORK", font=("Helvetica", 16, "bold"), bg="white")
+    titulo.pack(pady=10)
 
-# Cria a janela principal
-root = tk.Tk()
-root.title("Trabalho Grafo - 01")
+    frame_inputs = tk.Frame(janela, bg="white")
+    frame_inputs.pack(pady=10)
 
-# Define o tamanho da janela
-root.geometry("400x400")
+    label_origem = tk.Label(frame_inputs, text="Ator de Origem:", bg="white", anchor="w")
+    label_origem.grid(row=0, column=0, sticky="w", padx=5, pady=5)
+    select_origem = ttk.Combobox(frame_inputs, values=atores)
+    select_origem.grid(row=0, column=1, padx=5, pady=5)
 
-# Adiciona um rótulo
-label = tk.Label(root, text="Trabalho de Busca em Largura de Filmes!")
-label.pack(pady=20)
+    label_destino = tk.Label(frame_inputs, text="Ator de Destino:", bg="white", anchor="w")
+    label_destino.grid(row=1, column=0, sticky="w", padx=5, pady=5)
+    select_destino = ttk.Combobox(frame_inputs, values=atores)
+    select_destino.grid(row=1, column=1, padx=5, pady=5)
 
-# Adiciona um campo de seleção de filmes
-movie_label1 = tk.Label(root, text="Selecione um filme:")
-movie_label1.pack(pady=5)
+    botao_bfs = tk.Button(janela, text="Executar BFS", command=executar_bfs)
+    botao_bfs.pack(pady=10)
 
-movie_entry1 = ttk.Combobox(root, values=movies, state="readonly")
-movie_entry1.pack(pady=5)
+    label_caminho = tk.Label(janela, text="Caminho Mínimo:", bg="white", anchor="w")
+    label_caminho.pack(pady=5)
 
-# Adiciona um campo de entrada para atores (desabilitado inicialmente)
-actor_label1 = tk.Label(root, text="Selecione o nome de um ator:")
-actor_label1.pack(pady=5)
+    caminho_texto = tk.Text(janela, height=6, width=45)
+    caminho_texto.pack(padx=10)
 
-actor_origin = ttk.Combobox(root, state="disabled")
-actor_origin.pack(pady=5)
-
-# Adiciona um campo de seleção de filmes
-movie_label2 = tk.Label(root, text="Selecione outro filme:")
-movie_label2.pack(pady=5)
-
-movie_entry2 = ttk.Combobox(root, values=movies, state="readonly")
-movie_entry2.pack(pady=5)
-
-# Adiciona um campo de entrada para atores (desabilitado inicialmente)
-actor_label2 = tk.Label(root, text="Selecione o nome de outro ator:")
-actor_label2.pack(pady=5)
-
-actor_destiny = ttk.Combobox(root, state="disabled")
-actor_destiny.pack(pady=5)
-
-# Função para habilitar o campo de atores com sugestões
-def on_movie1_select(*_):
-    selected_movie = movie_entry1.get()
-    for movie in data:
-        if selected_movie == movie.get("title"):
-            # Habilita o campo de entrada de atores e preenche com os atores do filme selecionado
-            actors = movie.get("cast", [])
-            actor_origin["values"] = actors if actors else ["Nenhum ator encontrado"]
-            actor_origin["state"] = "readonly"
-            break
-
-movie_entry1.bind("<<ComboboxSelected>>", on_movie1_select)
-
-# Função para habilitar o campo de atores com sugestões
-def on_movie2_select(*_):
-    selected_movie = movie_entry2.get()
-    for movie in data:
-        if selected_movie == movie.get("title"):
-            # Habilita o campo de entrada de atores e preenche com os atores do filme selecionado
-            actors = movie.get("cast", [])
-            actor_destiny["values"] = actors if actors else ["Nenhum ator encontrado"]
-            actor_destiny["state"] = "readonly"
-            break
-
-movie_entry2.bind("<<ComboboxSelected>>", on_movie2_select)
-
-# Cria uma janela de detalhes
-def expand_frame(*_):
-    if actor_origin.get() and actor_destiny.get():
-        root = tk.Tk()
-        root.title("Trabalho Grafo - 01")
-
-        root.geometry("400x200")
-
-        label = tk.Label(root, text="Trabalho de Busca em Largura de Filmes!")
-        label.pack(pady=20)
-    else:
-        # Mostra uma mensagem de erro se o filme não for encontrado
-        root = tk.Tk()
-        root.title("Trabalho Grafo - 01")
-
-        root.geometry("350x100")
-
-        error_label = tk.Label(root, text="Atores não encontrados!", fg="red")
-        error_label.pack(pady=20)
-
-# Adiciona um botão
-button = tk.Button(root, text="Clique aqui", command=expand_frame)
-button.pack(pady=10)
-
-# Inicia o loop da interface gráfica
-root.mainloop()
+    janela.mainloop()
+def formatar_caminho(caminho):
+    texto_formatado = []
+    for i, vertice in enumerate(caminho):
+        tipo = "🎬 Filme" if i % 2 == 1 else "🎭 Ator"
+        texto_formatado.append(f"{tipo}: {vertice}")
+    return "\n-> ".join(texto_formatado)
