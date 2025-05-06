@@ -83,7 +83,7 @@ def iniciar_interface():
     label_caminho = tk.Label(janela, text="Resultado da Busca:", bg="white", anchor="w")
     label_caminho.pack(pady=5)
 
-    caminho_texto = tk.Text(janela, height=6, width=45)
+    caminho_texto = tk.Text(janela, height=8, width=43, state="normal")
     caminho_texto.pack(padx=10)
 
     janela.mainloop()
